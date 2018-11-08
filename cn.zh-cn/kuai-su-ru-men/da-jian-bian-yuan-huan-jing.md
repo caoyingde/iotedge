@@ -1,0 +1,62 @@
+# 搭建边缘环境
+
+本章介绍部署边缘计算节点的方法，边缘计算节点是作为网关设备，用于将设备连接到物联网平台中。
+
+目前支持在以下系统中搭建边缘环境：
+
+* Windows x86\_64
+* MAC x86\_64
+* Ubuntu 18.04 x86\_64
+* Ubuntu 16.04 x86\_64
+
+## 安装Docker <a id="section_ojq_gry_32b .section"></a>
+
+1. 下载Docker客户端。
+   * MAC版下载：[https://docs.docker.com/docker-for-mac/install/\#download-docker-for-mac](https://docs.docker.com/docker-for-mac/install/#download-docker-for-mac)
+   * Windows版下载：[https://docs.docker.com/docker-for-windows/install/\#download-docker-for-windows](https://docs.docker.com/docker-for-windows/install/#download-docker-for-windows)
+   * Linux版：请至Docker Store下载安装适配您Linux发行版的Docker客户端。
+2. 安装Docker客户端。
+   * MAC版安装：[https://docs.docker.com/docker-for-mac/install/\#install-and-run-docker-for-mac](https://docs.docker.com/docker-for-mac/install/#install-and-run-docker-for-mac)
+   * Windows版安装：[https://docs.docker.com/docker-for-windows/install/\#install-docker-for-windows-desktop-app](https://docs.docker.com/docker-for-windows/install/#install-docker-for-windows-desktop-app)
+
+## 创建边缘网关 <a id="section_wzw_3fz_gfb .section"></a>
+
+1. 以阿里云账号登录[物联网控制台](http://iot.console.aliyun.com/)。
+2. 选择**设备管理** &gt; **产品**，单击**创建产品**。
+3. 创建产品名为**边缘计算节点**的网关产品。
+
+   ![](http://static-aliyun-doc.oss-cn-hangzhou.aliyuncs.com/assets/img/15284/15409895727299_zh-CN.png)
+
+   按照界面提示，设置如下参数，参数设置完成后，单击**确认**创建网关产品。
+
+   | 参数 | 描述 |
+   | :--- | :--- |
+   | 版本选择 | 此处选择**高级版**。 |
+   | 产品名称 | 此处设置为**边缘计算节点**。 |
+   | 节点类型 | 此处选择**网关**。 |
+   | 设备类型 | 表示一组预定义的标准功能模板。例如，目前为智能电表预定义了用电量、电压、电流和总累计量等标准功能，设备类型选择**智能电表**后，将自动创建好以上标准功能。您可以在标准功能模板的基础上编辑修改，也可以添加更多自定义功能。 |
+
+如果设备类型选择**无**，不会创建任何标准功能，可以自定义该产品的功能。
+
+此处设置为**边缘网关**。
+
+\| \|数据格式\|设备上下行的数据格式，当前支持**Alink JSON**格式，Alink JSON是物联网平台高级版为开发者提供的设备与云端的数据交换协议，采用 JSON 格式。此处选择**Alink JSON**。\| \|是否接入网关\|指设备是否要通过实际通信协议接入网关，此处选择**否**。\| \|产品描述\|您可以自定义，可以为空。\|
+
+## 安装并启动边缘计算节点 <a id="section_ixl_bff_j2b .section"></a>
+
+1. 下载启动脚本。
+   * Windows或Mac版：curl -O [http://aliyun-iotedge.oss-cn-hangzhou.aliyuncs.com/link-iot-edge.sh](http://aliyun-iotedge.oss-cn-hangzhou.aliyuncs.com/link-iot-edge.sh)
+   * Linux版：wget [http://aliyun-iotedge.oss-cn-hangzhou.aliyuncs.com/link-iot-edge.sh](http://aliyun-iotedge.oss-cn-hangzhou.aliyuncs.com/link-iot-edge.sh)
+2. 启动边缘计算节点。
+
+   ./link-iot-edge.sh {version} {productkey} {devicename} {devicesecret}
+
+   **说明：**
+
+   * 请将{version}替换为需要的Docker镜像版本号，此处替换为v1.7。
+   * 请将{productkey} {devicename} {devicesecret}替换为实际的边缘计算节点设备的三元组信息。
+
+3. 在[物联网控制台](http://iot.console.aliyun.com/)，选择**设备管理**，选择已创建好的边缘计算节点产品，查看网关状态。
+
+   ![](http://static-aliyun-doc.oss-cn-hangzhou.aliyuncs.com/assets/img/15286/15409895736743_zh-CN.png)
+
